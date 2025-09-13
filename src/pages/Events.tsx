@@ -2,6 +2,12 @@ import { Calendar, MapPin, Clock, Users } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import Layout from "@/components/Layout";
 
+// Import event images
+import sosialisasiImg from "@/assets/event-sosialisasi.jpg";
+import pelatihanImg from "@/assets/event-pelatihan.jpg";
+import patroliImg from "@/assets/event-patroli.jpg";
+import evaluasiImg from "@/assets/event-evaluasi.jpg";
+
 const Events = () => {
   const events = [
     {
@@ -12,7 +18,8 @@ const Events = () => {
       time: "08:00 - 10:00 WIB",
       location: "Aula Sekolah",
       attendees: 150,
-      status: "upcoming"
+      status: "upcoming",
+      image: sosialisasiImg
     },
     {
       id: 2,
@@ -22,7 +29,8 @@ const Events = () => {
       time: "13:00 - 16:00 WIB",
       location: "Ruang Rapat",
       attendees: 30,
-      status: "upcoming"
+      status: "upcoming",
+      image: pelatihanImg
     },
     {
       id: 3,
@@ -32,7 +40,8 @@ const Events = () => {
       time: "07:00 - 08:00 WIB",
       location: "Seluruh Area Sekolah",
       attendees: 25,
-      status: "recurring"
+      status: "recurring",
+      image: patroliImg
     },
     {
       id: 4,
@@ -42,7 +51,8 @@ const Events = () => {
       time: "14:00 - 16:00 WIB",
       location: "Ruang BK",
       attendees: 20,
-      status: "planned"
+      status: "planned",
+      image: evaluasiImg
     }
   ];
 
@@ -63,21 +73,30 @@ const Events = () => {
           {/* Events Grid */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {events.map((event) => (
-              <Card key={event.id} className="pks-card hover:shadow-glow transition-all duration-300">
-                <CardHeader>
-                  <div className="flex items-center justify-between mb-2">
-                    <CardTitle className="text-xl font-bold text-foreground">
-                      {event.title}
-                    </CardTitle>
+              <Card key={event.id} className="pks-card hover:shadow-glow transition-all duration-300 overflow-hidden">
+                {/* Event Image */}
+                <div className="relative h-48 overflow-hidden">
+                  <img 
+                    src={event.image} 
+                    alt={`Dokumentasi ${event.title}`}
+                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                  />
+                  <div className="absolute top-4 right-4">
                     <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                      event.status === 'upcoming' ? 'bg-primary/20 text-primary' :
-                      event.status === 'recurring' ? 'bg-success/20 text-success' :
-                      'bg-accent/20 text-accent'
+                      event.status === 'upcoming' ? 'bg-primary/20 text-primary backdrop-blur-sm' :
+                      event.status === 'recurring' ? 'bg-success/20 text-success backdrop-blur-sm' :
+                      'bg-accent/20 text-accent backdrop-blur-sm'
                     }`}>
                       {event.status === 'upcoming' ? 'Mendatang' :
                        event.status === 'recurring' ? 'Rutin' : 'Direncanakan'}
                     </span>
                   </div>
+                </div>
+                
+                <CardHeader>
+                  <CardTitle className="text-xl font-bold text-foreground">
+                    {event.title}
+                  </CardTitle>
                   <CardDescription className="text-muted-foreground">
                     {event.description}
                   </CardDescription>
