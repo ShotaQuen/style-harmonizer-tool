@@ -145,7 +145,7 @@
   }
   
   .pks-sidebar {
-    @apply bg-sidebar-background border-r border-sidebar-border shadow-xl;
+    @apply bg-sidebar border-r border-sidebar-border shadow-xl;
   }
   
   /* PKS Button variants */
