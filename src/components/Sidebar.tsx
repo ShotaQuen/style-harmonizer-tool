@@ -10,6 +10,8 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
   const menuItems = [
     { label: "Beranda", href: "/" },
     { label: "Event", href: "/events" },
+    { label: "Struktur Organisasi", href: "/struktur-organisasi" },
+    { label: "Galeri", href: "/galeri" },
     { label: "Perekrutan", href: "/perekrutan" },
   ];
 

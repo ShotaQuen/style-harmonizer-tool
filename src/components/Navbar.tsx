@@ -36,6 +36,18 @@ const Navbar = ({ onToggleSidebar, isSidebarOpen }: NavbarProps) => {
             Event
           </a>
           <a 
+            href="/struktur-organisasi" 
+            className="text-foreground hover:text-primary transition-colors font-medium"
+          >
+            Struktur
+          </a>
+          <a 
+            href="/galeri" 
+            className="text-foreground hover:text-primary transition-colors font-medium"
+          >
+            Galeri
+          </a>
+          <a 
             href="/perekrutan" 
             className="text-foreground hover:text-primary transition-colors font-medium"
           >
