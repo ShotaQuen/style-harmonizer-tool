@@ -1,8 +1,52 @@
-import { CheckCircle, Users, Shield, Award, Target } from "lucide-react";
+import { CheckCircle, Users, Shield, Award, Target, Clock, Calendar, AlertCircle } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import Layout from "@/components/Layout";
+import { useEffect, useState } from "react";
 
 const Perekrutan = () => {
+  // Registration period configuration
+  const registrationPeriod = {
+    startDate: new Date('2024-10-01'),
+    endDate: new Date('2024-10-31'),
+    title: "Periode Pendaftaran PKS 2024/2025"
+  };
+
+  const [timeLeft, setTimeLeft] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0
+  });
+
+  const [isRegistrationOpen, setIsRegistrationOpen] = useState(false);
+
+  useEffect(() => {
+    const calculateTimeLeft = () => {
+      const now = new Date();
+      const difference = registrationPeriod.endDate.getTime() - now.getTime();
+      
+      if (difference > 0) {
+        setTimeLeft({
+          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+          minutes: Math.floor((difference / 1000 / 60) % 60),
+          seconds: Math.floor((difference / 1000) % 60)
+        });
+        
+        const isOpen = now >= registrationPeriod.startDate && now <= registrationPeriod.endDate;
+        setIsRegistrationOpen(isOpen);
+      } else {
+        setIsRegistrationOpen(false);
+      }
+    };
+
+    calculateTimeLeft();
+    const timer = setInterval(calculateTimeLeft, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
   const requirements = [
     "Siswa aktif SMKN 2 Bone",
     "Memiliki komitmen tinggi terhadap keamanan sekolah",
@@ -76,6 +120,78 @@ const Perekrutan = () => {
               Jadilah bagian dari Patroli Keamanan Sekolah dan berkontribusi dalam menjaga 
               keamanan dan kedisiplinan di lingkungan sekolah
             </p>
+          </div>
+
+          {/* Registration Period Status */}
+          <div className="mb-16">
+            <Card className={`max-w-4xl mx-auto ${isRegistrationOpen ? 'border-success bg-success/5' : 'border-destructive bg-destructive/5'}`}>
+              <CardHeader className="text-center">
+                <div className="flex items-center justify-center gap-2 mb-4">
+                  {isRegistrationOpen ? (
+                    <CheckCircle className="w-6 h-6 text-success" />
+                  ) : (
+                    <AlertCircle className="w-6 h-6 text-destructive" />
+                  )}
+                  <Badge variant={isRegistrationOpen ? "success" : "destructive"}>
+                    {isRegistrationOpen ? "PENDAFTARAN DIBUKA" : "PENDAFTARAN DITUTUP"}
+                  </Badge>
+                </div>
+                <CardTitle className="text-2xl font-bold">{registrationPeriod.title}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid md:grid-cols-2 gap-8 text-center">
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-center gap-2">
+                      <Calendar className="w-5 h-5 text-primary" />
+                      <h3 className="font-semibold">Periode Pendaftaran</h3>
+                    </div>
+                    <div className="space-y-2">
+                      <p className="text-sm text-muted-foreground">Mulai:</p>
+                      <p className="font-medium">{registrationPeriod.startDate.toLocaleDateString('id-ID', { 
+                        weekday: 'long', 
+                        year: 'numeric', 
+                        month: 'long', 
+                        day: 'numeric' 
+                      })}</p>
+                      <p className="text-sm text-muted-foreground">Berakhir:</p>
+                      <p className="font-medium">{registrationPeriod.endDate.toLocaleDateString('id-ID', { 
+                        weekday: 'long', 
+                        year: 'numeric', 
+                        month: 'long', 
+                        day: 'numeric' 
+                      })}</p>
+                    </div>
+                  </div>
+                  
+                  {isRegistrationOpen && (
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-center gap-2">
+                        <Clock className="w-5 h-5 text-primary" />
+                        <h3 className="font-semibold">Waktu Tersisa</h3>
+                      </div>
+                      <div className="grid grid-cols-4 gap-2">
+                        <div className="bg-primary/10 p-3 rounded-lg">
+                          <div className="text-2xl font-bold text-primary">{timeLeft.days}</div>
+                          <div className="text-xs text-muted-foreground">Hari</div>
+                        </div>
+                        <div className="bg-primary/10 p-3 rounded-lg">
+                          <div className="text-2xl font-bold text-primary">{timeLeft.hours}</div>
+                          <div className="text-xs text-muted-foreground">Jam</div>
+                        </div>
+                        <div className="bg-primary/10 p-3 rounded-lg">
+                          <div className="text-2xl font-bold text-primary">{timeLeft.minutes}</div>
+                          <div className="text-xs text-muted-foreground">Menit</div>
+                        </div>
+                        <div className="bg-primary/10 p-3 rounded-lg">
+                          <div className="text-2xl font-bold text-primary">{timeLeft.seconds}</div>
+                          <div className="text-xs text-muted-foreground">Detik</div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
           </div>
 
           {/* Hero Section */}
@@ -162,15 +278,24 @@ const Perekrutan = () => {
           <div className="text-center">
             <div className="pks-card-elevated p-8 rounded-2xl max-w-2xl mx-auto">
               <h3 className="text-2xl font-bold mb-4 text-gradient-pks">
-                Siap Bergabung?
+                {isRegistrationOpen ? "Siap Bergabung?" : "Pendaftaran Akan Segera Dibuka"}
               </h3>
               <p className="text-muted-foreground mb-6">
-                Jika Anda memenuhi persyaratan dan siap berkomitmen untuk menjaga keamanan sekolah, 
-                segera daftarkan diri Anda!
+                {isRegistrationOpen 
+                  ? "Jika Anda memenuhi persyaratan dan siap berkomitmen untuk menjaga keamanan sekolah, segera daftarkan diri Anda!"
+                  : "Nantikan pembukaan pendaftaran PKS periode berikutnya. Pastikan Anda sudah mempersiapkan persyaratan yang diperlukan."
+                }
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <button className="px-6 py-3 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-lg transition-colors shadow-lg">
-                  Daftar Sekarang
+                <button 
+                  className={`px-6 py-3 font-semibold rounded-lg transition-colors shadow-lg ${
+                    isRegistrationOpen 
+                      ? "bg-primary hover:bg-primary/90 text-primary-foreground" 
+                      : "bg-muted text-muted-foreground cursor-not-allowed"
+                  }`}
+                  disabled={!isRegistrationOpen}
+                >
+                  {isRegistrationOpen ? "Daftar Sekarang" : "Pendaftaran Ditutup"}
                 </button>
                 <button className="px-6 py-3 border border-border hover:bg-card text-foreground font-semibold rounded-lg transition-colors">
                   Hubungi Kami
