@@ -15,10 +15,14 @@ import NotFound from "./pages/NotFound";
 const queryClient = new QueryClient();
 
 const App = () => {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(() => {
+    // Only show loading if it hasn't been shown in this session
+    return !sessionStorage.getItem('pks-loading-shown');
+  });
 
   const handleLoadingComplete = () => {
     setIsLoading(false);
+    sessionStorage.setItem('pks-loading-shown', 'true');
   };
 
   if (isLoading) {
