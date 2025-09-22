@@ -1,7 +1,7 @@
 import { Shield, Users, Award, Eye, Target, CheckCircle } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import Layout from "@/components/Layout";
-import VisitorCounter from "@/components/VisitorCounter";
+import VisitorStats from "@/components/VisitorStats";
 import PKSScene3D from "@/components/PKSScene3D";
 
 const Index = () => {
@@ -49,9 +49,10 @@ const Index = () => {
       <div className="min-h-screen">
         {/* Hero Section */}
         <section className="relative px-6 py-20 lg:py-32">
-          {/* Visitor Counter */}
-          <div className="fixed top-20 right-6 z-40">
-            <VisitorCounter />
+          {/* Visitor Stats */}
+          <div className="fixed top-20 right-6 z-40 flex gap-2">
+            <VisitorStats currentPage="/" />
+            <VisitorStats currentPage="/" showDetailed />
           </div>
 
           <div className="max-w-7xl mx-auto text-center">
