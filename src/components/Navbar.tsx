@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import MusicPlayer from "./MusicPlayer";
 
 interface NavbarProps {
   onToggleSidebar: () => void;
@@ -53,6 +54,7 @@ const Navbar = ({ onToggleSidebar, isSidebarOpen }: NavbarProps) => {
           >
             Perekrutan
           </a>
+          <MusicPlayer />
         </div>
 
         {/* Mobile Menu Toggle */}
