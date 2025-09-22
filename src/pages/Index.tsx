@@ -1,6 +1,8 @@
 import { Shield, Users, Award, Eye, Target, CheckCircle } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import Layout from "@/components/Layout";
+import VisitorCounter from "@/components/VisitorCounter";
+import PKSScene3D from "@/components/PKSScene3D";
 
 const Index = () => {
   const features = [
@@ -47,13 +49,15 @@ const Index = () => {
       <div className="min-h-screen">
         {/* Hero Section */}
         <section className="relative px-6 py-20 lg:py-32">
+          {/* Visitor Counter */}
+          <div className="fixed top-20 right-6 z-40">
+            <VisitorCounter />
+          </div>
+
           <div className="max-w-7xl mx-auto text-center">
+            {/* 3D PKS Logo */}
             <div className="mb-8">
-              <img 
-                src="/favicon.jpg" 
-                alt="PKS Logo" 
-                className="w-24 h-24 mx-auto rounded-2xl object-cover border-4 border-primary shadow-glow mb-6"
-              />
+              <PKSScene3D />
             </div>
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6">
               <span className="text-gradient-pks">PKS</span>
