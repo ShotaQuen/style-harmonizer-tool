@@ -54,21 +54,25 @@ const Navbar = ({ onToggleSidebar, isSidebarOpen }: NavbarProps) => {
           >
             Perekrutan
           </a>
-          <MusicPlayer />
         </div>
 
-        {/* Mobile Menu Toggle */}
-        <button
-          onClick={onToggleSidebar}
-          className="md:hidden p-2 text-foreground hover:text-primary transition-colors"
-          aria-label="Toggle menu"
-        >
-          {isSidebarOpen ? (
-            <X className="w-6 h-6" />
-          ) : (
-            <Menu className="w-6 h-6" />
-          )}
-        </button>
+        {/* Right Side Controls */}
+        <div className="flex items-center gap-3">
+          <MusicPlayer />
+          
+          {/* Mobile Menu Toggle */}
+          <button
+            onClick={onToggleSidebar}
+            className="md:hidden p-2 text-foreground hover:text-primary transition-colors"
+            aria-label="Toggle menu"
+          >
+            {isSidebarOpen ? (
+              <X className="w-6 h-6" />
+            ) : (
+              <Menu className="w-6 h-6" />
+            )}
+          </button>
+        </div>
       </div>
     </nav>
   );
